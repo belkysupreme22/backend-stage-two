@@ -32,7 +32,8 @@ This is a RESTful API for managing a "Books Collection". The API supports CRUD o
 | POST   | `/api/books`    | Add a new book                          |
 | PUT    | `/api/books/:id`| Update a book by ID                     |
 | DELETE | `/api/books/:id`| Delete a book by ID                     |
-
+| GET    | `/api/books/recommendations`| get a book recommendation   |
+| POST   | `/api/books/favorite/:id`| Mark a book as favorite by ID  |
 #### **Request Body for POST/PUT**
 ```json
 {
