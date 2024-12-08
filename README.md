@@ -31,7 +31,11 @@ To access the Swagger UI for this API, follow these steps:
     ```bash
         http://localhost:8080/api-docs
 
-(Replace `localhost:5000` with your deployed server URL if it's hosted remotely.)
+(Replace `localhost:8080` with your deployed server URL if it's hosted remotely.)
+
+3. The api documentation is also live and accessible at:
+  ```bash
+      https://backend-stage-two-1ke4.onrender.com/api-docs
 
 The Swagger UI will provide an interactive interface where you can test all available API endpoints, view their documentation, and try out requests with ease.
 
@@ -50,12 +54,4 @@ The Swagger UI will provide an interactive interface where you can test all avai
 | GET    | `/api/books/recommendations` | Get a random book recommendation                |
 | POST   | `/api/books/favorite/:id` | Mark a book as favorite by ID                    |
 
-### Request Body for POST/PUT
-```json
-{
-"title": "Book Title",
-"author": "Author Name",
-"isbn": "978-1234567890",
-"publishedYear": 2023
-}
 
