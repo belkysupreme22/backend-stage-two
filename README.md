@@ -34,7 +34,7 @@ To access the Swagger UI for this API, follow these steps:
 (Replace `localhost:8080` with your deployed server URL if it's hosted remotely.)
 
 3. The api documentation is also live and accessible at:
-  ```bash
+    ```bash
       https://backend-stage-two-1ke4.onrender.com/api-docs
 
 The Swagger UI will provide an interactive interface where you can test all available API endpoints, view their documentation, and try out requests with ease.
