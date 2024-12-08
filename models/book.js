@@ -24,6 +24,12 @@ const bookSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  favoritedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Reference to User model
+  },
 });
+
+
 
 module.exports = mongoose.model('Book', bookSchema);

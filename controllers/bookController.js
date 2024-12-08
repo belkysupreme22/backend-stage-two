@@ -1,4 +1,5 @@
 const Book = require('../models/book');
+const User = require('../models/User'); 
 
 
 exports.getAllBooks = async (req, res) => {
@@ -52,14 +53,43 @@ exports.deleteBook = async (req, res) => {
 };
 
 
+
+
 exports.getBookRecommendations = async (req, res) => {
   try {
-    const randomBook = await Book.aggregate([{ $sample: { size: 1 } }]);
-    res.status(200).json(randomBook[0]);
+    const { role } = req.user; 
+
+    if (role === 'admin') {
+   
+      const users = await User.find({ 'favorites': { $exists: true, $ne: [] } });
+
+     
+      const favoriteBookId = users[0]?.favorites[0]; 
+      if (!favoriteBookId) {
+        return res.status(400).json({ message: 'No favorite books found for users.' });
+      }
+
+    
+      const favoriteBook = await Book.findById(favoriteBookId);
+      if (!favoriteBook) {
+        return res.status(400).json({ message: 'Favorite book not found.' });
+      }
+
+     
+      const recommendedBooks = await Book.find({
+        author: favoriteBook.author
+      }).limit(5);
+
+      return res.status(200).json(recommendedBooks);
+    }
+    const books = await Book.find().limit(5);
+    return res.status(200).json(books); 
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 
 exports.markAsFavorite = async (req, res) => {
@@ -73,5 +103,23 @@ exports.markAsFavorite = async (req, res) => {
     res.status(200).json(book);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getBooks = async (req, res) => {
+  try {
+    const { role } = req.user;
+
+    let books;
+    if (role === 'user') {
+      books = await Book.find({ isFavorite: true });
+    } else {
+      books = await Book.find({});
+    }
+
+    res.status(200).json({ books });
+  } catch (error) {
+    console.error('Error fetching books:', error.message);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
